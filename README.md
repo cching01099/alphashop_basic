@@ -3,6 +3,7 @@
 ## 專案目的：以 React 實作開發電商網站（基礎版)
 
 目前包含： 靜態畫面以 JSX 呈現，並增新了購物車資料
+![Index page about alphashop_basic_cart](./public/alphashop_basic_cart.png)
 
 ## 環境設置 :
 
