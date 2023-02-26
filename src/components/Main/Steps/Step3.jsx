@@ -1,3 +1,4 @@
+//step3: 信用卡資訊
 function Step3() {
   return (
     <form className="col col-12" data-phase="credit-card">

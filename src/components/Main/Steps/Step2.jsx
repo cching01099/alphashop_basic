@@ -1,3 +1,4 @@
+//step2:運費功能
 function Step2() {
   return (
     <form className="col col-12" data-phase="shipping">
