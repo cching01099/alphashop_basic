@@ -9,7 +9,7 @@ import { useState } from "react";
 
 function Main() {
   //會變動的是每一step的狀態，所以先設定currentPhase作為狀態變化的值，以及設定初始值為1
-  //傳遞值：data-phase的值，現在是到了哪一階段(currentPhase)＝切換步驟事件
+  //要傳的prop:data-phase的值，現在是到了哪一階段(currentPhase)＝切換步驟事件
   const [currentPhase, setCurrentPhase] = useState(1);
 
   return (
