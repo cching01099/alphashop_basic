@@ -1,24 +1,6 @@
-import { ReactComponent as SvgIconMinus } from "../../../icons/minus.svg";
+import { ReactComponent as SvgMinus } from "../../../icons/minus.svg";
 import { ReactComponent as SvgPlus } from "../../../icons/plus.svg";
-// import Product1 from "../../../images/product-1.jpg";
-// import Product2 from "../../../images/product-2.jpg";
-
-const initialItem = [
-  {
-    id: "1",
-    name: "貓咪罐罐",
-    img: "https://picsum.photos/300/300?text=1",
-    price: 100,
-    quantity: 2,
-  },
-  {
-    id: "2",
-    name: "貓咪干干",
-    img: "https://picsum.photos/300/300?text=2",
-    price: 200,
-    quantity: 1,
-  },
-];
+import CartData from "../Data/CartData.js";
 
 function Cart() {
   return (
@@ -38,7 +20,7 @@ function Cart() {
               <div className="product-control-container">
                 <div className="product-control">
                   <svg className="product-action minus">
-                    <SvgIconMinus />
+                    <SvgMinus />
                   </svg>
                   <span className="product-count">{item.quantity}</span>
                   <svg className="product-action plus">
