@@ -1,6 +1,6 @@
 import { ReactComponent as PgCompleteIcon } from "../../icons/pg-complete.svg";
 
-function StepProgress() {
+export default function StepProgress({ currentStep }) {
   return (
     <>
       {/* <!-- register-progress --> */}
@@ -38,5 +38,3 @@ function StepProgress() {
     </>
   );
 }
-
-export default StepProgress;
