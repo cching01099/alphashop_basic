@@ -5,10 +5,13 @@ import cartData from "../Data/cartData.js";
 
 export default function Cart({ shippingFee }) {
   const [cartProducts, setCartProducts] = useState(cartData);
-  const productsTotal = cartProducts
+  //購物車裡全部產品的金額加總
+  const productsPrice = cartProducts
     .map((item) => item.price * item.quantity)
     .reduce((sum, price) => sum + price, 0);
-  const total = shippingFee === 500 ? 500 + productsTotal : productsTotal + 0;
+  //整筆購物車的金額(購物車裡的產品＋運費)
+  const totalPrice =
+    shippingFee === 500 ? 500 + productsPrice : productsPrice + 0;
   return (
     <section className="cart-container col col-lg-5 col-sm-12">
       <h3 className="cart-title">購物籃</h3>
@@ -19,7 +22,7 @@ export default function Cart({ shippingFee }) {
         />
       </section>
       <CartPrice title="運費" price="免費" />
-      <CartPrice title="小計" price={"$ " + total} />
+      <CartPrice title="小計" price={"$ " + totalPrice} />
     </section>
   );
 }
