@@ -1,5 +1,5 @@
 //購物車資料
-const CartData = [
+const cartData = [
   {
     id: "1",
     name: "貓咪罐罐",
@@ -17,4 +17,4 @@ const CartData = [
 ];
 
 // 匯出
-export default CartData;
+export default cartData;
