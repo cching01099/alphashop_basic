@@ -6,7 +6,7 @@
 
 2.V3 新增的功能: 各步驟的 Progress，可依照點擊的行為，前往或返回上下步驟，並如實呈現其步驟的內容；購物清單的產品資料，改以動態渲染的方式呈現，同時可於產品數量的增減選項上做點擊
 
-![Index page about alphashop_basic_V3](./public/alphashop_basic_V3.png)
+![Index page about alphashop_basic_cartupdate](./public/alphashop_basic_cartupdate.png)
 
 ## 環境設置 :
 
