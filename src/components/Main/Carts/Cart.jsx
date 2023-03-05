@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import CartContext from "../Constants/CartContext.js";
+import { CartContext } from "../Constants/CartContext";
 import { ReactComponent as SvgMinus } from "../../../icons/minus.svg";
 import { ReactComponent as SvgPlus } from "../../../icons/plus.svg";
 
 export default function Cart({ shipFee }) {
-  const { cartItems, handleOnClick } = useContext(CartContext);
+  const { cartItems, handleQuantityClick } = useContext(CartContext);
   //整筆購物車的金額(購物車裡的產品＋運費)
   const totalPrice = cartItems.reduce((total, item) => {
     return total + item.price * item.quantity;
@@ -14,23 +14,22 @@ export default function Cart({ shipFee }) {
     <section className="cart-container col col-lg-5 col-sm-12">
       <h3 className="cart-title">購物籃</h3>
       <section className="product-list col col-12" data-total-price="0">
-        <CartInfo cartProducts={cartItems} handleOnClick={handleOnClick} />
+        <CartInfo items={cartItems} handleQuantityClick={handleQuantityClick} />
       </section>
-      <CartPrice title="運費" price="{shipFee}" />
-      <CartPrice title="小計" price={"$ " + totalPrice} />
+      <CartPrice totalPrice={totalPrice} shipFee={shipFee} />
     </section>
   );
 }
 
-//動態呈現購物車裡的item細項資料
-function CartInfo({ items, handleOnClick }) {
+//購物車清單:動態呈現item細項資料 (+-圖片檔上的事件在CartContext做了）
+function CartInfo({ items, handleQuantityClick }) {
+  //動態渲染item細項資料
   const itemLists = items.map((item) => {
     return (
       <div
         className="product-container col col-12"
         data-count={item.quantity}
         data-price={item.price}
-        id={item.id}
         key={item.id}
       >
         <img className="img-container" src={item.img} alt="" />
@@ -40,16 +39,16 @@ function CartInfo({ items, handleOnClick }) {
             <div className="product-control">
               <SvgMinus
                 className="product-action cursor-point"
-                onClick={() => handleOnClick(item.id, "minus")}
+                onClick={() => handleQuantityClick(item.id, "minus")}
               />
               <span className="product-count">{item.quantity}</span>
               <SvgPlus
                 className="product-action cursor-point"
-                onClick={() => handleOnClick(item.id, "plus")}
+                onClick={() => handleQuantityClick(item.id, "plus")}
               />
             </div>
           </div>
-          <div className="price">{item.quantity * item.price}</div>
+          <div className="price">${item.quantity * item.price}</div>
         </div>
       </div>
     );

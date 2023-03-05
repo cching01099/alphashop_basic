@@ -21,10 +21,10 @@ const cartData = [
 // export CartContext which the default value is cartData
 export const CartContext = createContext(cartData);
 
-export default function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState(cartData);
-  // +-圖片上的click事件，傳入id 和action 判斷行為
-  const handleOnClick = (id, action) => {
+export function CartProvider({ children }) {
+  const [cartItems, setCartItems] = useState([...cartData]);
+
+  const handleQuantityClick = (id, action) => {
     const selectedItem = cartItems.map((item) => {
       //辨別商品的id是否為傳入的id，以及action行為去判斷數量的增減與否
       if (item.id === id) {
@@ -47,7 +47,7 @@ export default function CartProvider({ children }) {
     setCartItems(filterSelectedItem);
   };
   return (
-    <CartContext.Provider value={{ cartItems, handleOnClick }}>
+    <CartContext.Provider value={{ cartItems, handleQuantityClick }}>
       {children}
     </CartContext.Provider>
   );
