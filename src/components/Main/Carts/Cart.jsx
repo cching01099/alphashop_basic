@@ -1,27 +1,9 @@
 import { useContext } from "react";
-import { CartContext } from "../Constants/CartContext";
+import { CartContext } from "./CartContext";
 import { ReactComponent as SvgMinus } from "../../../icons/minus.svg";
 import { ReactComponent as SvgPlus } from "../../../icons/plus.svg";
 
-export default function Cart({ shipFee }) {
-  const { cartItems, handleQuantityClick } = useContext(CartContext);
-  //整筆購物車的金額(購物車裡的產品＋運費)
-  const totalPrice = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity;
-  }, Number(shipFee));
-
-  return (
-    <section className="cart-container col col-lg-5 col-sm-12">
-      <h3 className="cart-title">購物籃</h3>
-      <section className="product-list col col-12" data-total-price="0">
-        <CartInfo items={cartItems} handleQuantityClick={handleQuantityClick} />
-      </section>
-      <CartPrice totalPrice={totalPrice} shipFee={shipFee} />
-    </section>
-  );
-}
-
-//購物車清單:動態呈現item細項資料 (+-圖片檔上的事件在CartContext做了）
+//購物車清單:動態呈現item細項資料 (+-圖片檔上的事件在CartContext)
 function CartInfo({ items, handleQuantityClick }) {
   //動態渲染item細項資料
   const itemLists = items.map((item) => {
@@ -48,7 +30,7 @@ function CartInfo({ items, handleQuantityClick }) {
               />
             </div>
           </div>
-          <div className="price">${item.quantity * item.price}</div>
+          <div className="price">${item.price * item.quantity}</div>
         </div>
       </div>
     );
@@ -60,16 +42,34 @@ function CartInfo({ items, handleQuantityClick }) {
   );
 }
 
-//購物車計價的元件
-function CartPrice({ totalPrice, shipFee }) {
+//購物車的計價
+function CartBilling({ totalPrice, shipFee }) {
   return (
-    <section className="cart-info shipping col col-12">
-      <div className="text">運費</div>
-      <div className="price">{shipFee === 500 ? `$ ${shipFee}` : "免費"}</div>
+    <div>
+      <section className="cart-info shipping col col-12">
+        <div className="text">運費</div>
+        <div className="price">{shipFee === 500 ? `$ ${shipFee}` : "免費"}</div>
+      </section>
       <section className="cart-info total col col-12">
         <div className="text">小計</div>
         <div className="price">${totalPrice.toLocaleString()}</div>
       </section>
+    </div>
+  );
+}
+//整個 Carts
+export default function Carts({ shipFee }) {
+  const { cartItems, handleQuantityClick } = useContext(CartContext);
+
+  const totalPrice = cartItems.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, Number(shipFee));
+
+  return (
+    <section className="cart-container col col-lg-5 col-sm-12">
+      <h3 className="cart-title">購物籃</h3>
+      <CartInfo items={cartItems} handleQuantityClick={handleQuantityClick} />
+      <CartBilling totalPrice={totalPrice} shipFee={shipFee} />
     </section>
   );
 }

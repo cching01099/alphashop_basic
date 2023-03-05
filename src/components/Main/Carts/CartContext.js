@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { createContext, useState } from "react";
 
 //購物車資料
 const cartData = [
@@ -21,14 +21,13 @@ const cartData = [
 // export CartContext which the default value is cartData
 export const CartContext = createContext(cartData);
 
-export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([...cartData]);
+export function CartContextProvider({ children }) {
+  const [cartItems, setCartItems] = useState(cartData);
 
   const handleQuantityClick = (id, action) => {
     const selectedItem = cartItems.map((item) => {
-      //辨別商品的id是否為傳入的id，以及action行為去判斷數量的增減與否
       if (item.id === id) {
-        if (action === "plus") {
+        if (action === "add") {
           return {
             ...item,
             quantity: item.quantity + 1,
@@ -46,6 +45,7 @@ export function CartProvider({ children }) {
     const filterSelectedItem = selectedItem.filter((item) => item.quantity > 0);
     setCartItems(filterSelectedItem);
   };
+
   return (
     <CartContext.Provider value={{ cartItems, handleQuantityClick }}>
       {children}
