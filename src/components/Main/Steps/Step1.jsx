@@ -1,5 +1,5 @@
 //step1:寄送地址
-import Step1Data from "../Data/Step1Data.js";
+import Step1Data from "../Constants/Step1Data.js";
 
 //用map去動態渲染抓要的稱謂＆城市的資料
 function SelectData(data) {

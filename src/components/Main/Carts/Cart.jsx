@@ -1,59 +1,37 @@
+import { useContext } from "react";
+import CartContext from "../Constants/CartContext.js";
 import { ReactComponent as SvgMinus } from "../../../icons/minus.svg";
 import { ReactComponent as SvgPlus } from "../../../icons/plus.svg";
-import { useState } from "react";
-import cartData from "../Data/cartData.js";
 
-export default function Cart({ shippingFee }) {
-  const [cartProducts, setCartProducts] = useState(cartData);
-  //購物車裡全部產品的金額加總
-  const productsPrice = cartProducts
-    .map((item) => item.price * item.quantity)
-    .reduce((sum, price) => sum + price, 0);
+export default function Cart({ shipFee }) {
+  const { cartItems, handleOnClick } = useContext(CartContext);
   //整筆購物車的金額(購物車裡的產品＋運費)
-  const totalPrice =
-    shippingFee === 500 ? 500 + productsPrice : productsPrice + 0;
+  const totalPrice = cartItems.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, Number(shipFee));
+
   return (
     <section className="cart-container col col-lg-5 col-sm-12">
       <h3 className="cart-title">購物籃</h3>
       <section className="product-list col col-12" data-total-price="0">
-        <CartItems
-          cartProducts={cartProducts}
-          onQuantityChange={setCartProducts}
-        />
+        <CartInfo cartProducts={cartItems} handleOnClick={handleOnClick} />
       </section>
-      <CartPrice title="運費" price="免費" />
+      <CartPrice title="運費" price="{shipFee}" />
       <CartPrice title="小計" price={"$ " + totalPrice} />
     </section>
   );
 }
 
-function CartItems({ cartProducts, onQuantityChange }) {
-  //購物車的數量增減動作
-  function handleQuantityClick(e) {
-    const targetId = e.target.closest(".product-container").id;
-    const isMinus = e.target.parentElement.classList.contains("minus");
-    const nextProduct = cartProducts.map((item) => {
-      if (item.id === targetId) {
-        return {
-          ...item,
-          quantity: isMinus ? item.quantity - 1 : item.quantity + 1,
-        };
-      }
-      return item;
-    });
-    // 篩掉數量是0的商品（＝item.數量要>0)
-    const selectedItem = nextProduct.filter((item) => item.quantity > 0);
-    onQuantityChange(selectedItem);
-  }
-  //動態渲染購物車清單裡的資料
-  const cartLists = cartProducts.map((item) => {
+//動態呈現購物車裡的item細項資料
+function CartInfo({ items, handleOnClick }) {
+  const itemLists = items.map((item) => {
     return (
       <div
         className="product-container col col-12"
         data-count={item.quantity}
         data-price={item.price}
-        key={item.id}
         id={item.id}
+        key={item.id}
       >
         <img className="img-container" src={item.img} alt="" />
         <div className="product-info">
@@ -61,30 +39,38 @@ function CartItems({ cartProducts, onQuantityChange }) {
           <div className="product-control-container">
             <div className="product-control">
               <SvgMinus
-                className="product-action minus"
-                onClick={handleQuantityClick}
+                className="product-action cursor-point"
+                onClick={() => handleOnClick(item.id, "minus")}
               />
               <span className="product-count">{item.quantity}</span>
               <SvgPlus
-                className="product-action plus"
-                onClick={handleQuantityClick}
+                className="product-action cursor-point"
+                onClick={() => handleOnClick(item.id, "plus")}
               />
             </div>
           </div>
-          <div className="price">{item.price}</div>
+          <div className="price">{item.quantity * item.price}</div>
         </div>
       </div>
     );
   });
-  return cartLists;
+  return (
+    <section className="product-list col col-12" data-total-price="0">
+      {itemLists}
+    </section>
+  );
 }
 
 //購物車計價的元件
-function CartPrice({ price, title }) {
+function CartPrice({ totalPrice, shipFee }) {
   return (
     <section className="cart-info shipping col col-12">
-      <div className="text">{title}</div>
-      <div className="price">{price}</div>
+      <div className="text">運費</div>
+      <div className="price">{shipFee === 500 ? `$ ${shipFee}` : "免費"}</div>
+      <section className="cart-info total col col-12">
+        <div className="text">小計</div>
+        <div className="price">${totalPrice.toLocaleString()}</div>
+      </section>
     </section>
   );
 }
