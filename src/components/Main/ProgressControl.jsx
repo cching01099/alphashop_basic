@@ -1,12 +1,8 @@
 import { ReactComponent as RightArrow } from "../../icons/right-arrow.svg";
 import { ReactComponent as LeftArrow } from "../../icons/left-arrow.svg";
-
-//要傳進的prop是在main裡宣告的state值（currentPhase for切換步驟事件）
+import { MainContext } from "../Contexts/MainContext";
 
 function ProgressControl({ currentPhase, setCurrentPhase }) {
-  //設定條件式去判斷事件e是上一步（prev)or下一步(next)
-  //如果e是上一步：currentPhase＝1，就不要執行setCurrentPhase（因為第一步驟沒有上一步了）; 其他則代表還有頁面可以回到上一步，setter function就要作用(phase就要-1回到上一頁)
-  //如果是e下一步：currentPhase＝3，就不要執行setCurrentPhase（因為第三步驟沒有下一步了）; 其他則代表還有頁面可以到下一步，setter function就要作用(phase就要＋1到下一頁)
   const handleOnClick = (e) => {
     if (e === "prev") {
       if (currentPhase === 1) return;

@@ -1,7 +1,5 @@
-import { createContext } from "react";
-
 //購物車資料
-export const cartData = [
+const cartData = [
   {
     id: "1",
     name: "貓咪罐罐",
@@ -18,5 +16,5 @@ export const cartData = [
   },
 ];
 
-// export CartContext which the default value is cartData
-export const CartContext = createContext(cartData);
+// 匯出
+export default cartData;
