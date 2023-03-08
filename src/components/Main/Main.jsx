@@ -12,8 +12,6 @@ function Main() {
   //會變動的是每一step的狀態，所以先設定currentPhase作為狀態變化的值，以及設定初始值為1
   //要傳的prop:data-phase的值，現在是到了哪一階段(currentPhase)＝切換步驟事件
   const [currentStep, setCurrentStep] = useState(1);
-  //初始狀態為address=第一頁
-  const [phase, setPhase] = useState("address");
 
   return (
     <DataProvider>
@@ -38,8 +36,6 @@ function Main() {
           <ProgressControl
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
-            phase={phase}
-            setPhase={setPhase}
           />
         </div>
       </main>

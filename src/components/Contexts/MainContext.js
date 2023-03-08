@@ -5,7 +5,7 @@ import cardData from "../Main/Constants/cartData.js";
 export const MainContext = createContext();
 
 //credit-card info
-const creditCard = {
+const creditCardInfo = {
   name: "",
   number: "",
   date: "",
@@ -16,7 +16,7 @@ const creditCard = {
 export function DataProvider({ children }) {
   const [cartItems, setCartItems] = useState(cardData);
   const [shipPrice, setShipPrice] = useState("免費");
-  const [creditCard, setCreditCard] = useState(creditCard);
+  const [creditCard, setCreditCard] = useState(creditCardInfo);
 
   //cart's totalPrice(cartItems+shipPrice)
   const cartItemsTotal = cartItems

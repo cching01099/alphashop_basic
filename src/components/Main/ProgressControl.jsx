@@ -1,16 +1,31 @@
 import { ReactComponent as RightArrow } from "../../icons/right-arrow.svg";
 import { ReactComponent as LeftArrow } from "../../icons/left-arrow.svg";
 import { MainContext } from "../Contexts/MainContext";
+import { useContext } from "react";
 
-function ProgressControl({ currentPhase, setCurrentPhase }) {
+function ProgressControl({ currentStep, setCurrentStep }) {
+  const total = useContext(MainContext).cart.total;
+  const creditCard = useContext(MainContext).pay[0];
+  const resetCreditCard = useContext(MainContext).pay[1];
+
   const handleOnClick = (e) => {
     if (e === "prev") {
-      if (currentPhase === 1) return;
-      setCurrentPhase((p) => p - 1);
+      if (currentStep === 1) return;
+      setCurrentStep((p) => p - 1);
     } else if (e === "next") {
-      if (currentPhase === 3) return;
-      setCurrentPhase((p) => p + 1);
+      if (currentStep === 3) return;
+      setCurrentStep((p) => p + 1);
     }
+  };
+
+  const handlePaymentData = () => {
+    console.log(`持卡人姓名：${creditCard.name}`);
+    console.log(`卡號：${creditCard.number}`);
+    console.log(`日期：${creditCard.date}`);
+    console.log(`cvc： ${creditCard.cvc}`);
+    console.log(`總金額：${total}`);
+    setCurrentStep(1);
+    resetCreditCard({ name: "", number: "", date: "", cvc: "" });
   };
 
   return (
@@ -57,7 +72,9 @@ function ProgressControl({ currentPhase, setCurrentPhase }) {
           </svg>
           上一步
         </button>
-        <button className="next">確認下單</button>
+        <button className="next" onClick={handlePaymentData}>
+          確認下單
+        </button>
       </section>
     </section>
   );
